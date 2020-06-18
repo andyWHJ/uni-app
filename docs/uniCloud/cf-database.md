@@ -17,7 +17,10 @@
 
 **阿里云使用的mongoDB数据库版本为3.4，腾讯云使用的版本是4.0。此差异可能会导致本文档内的部分功能不能在阿里云使用，我们会进行标注，如果发现有遗漏欢迎向我们反馈**
 
-**如果不想使用此数据库，可以自行连接其他数据库，如mysql，用法可以参考nodejs连接数据库**
+如果不想使用此数据库，可以自行连接其他数据库，如mysql/redis，用法可以参考：
+
+- [云函数连接Mysql数据库示例](https://ext.dcloud.net.cn/plugin?id=1925)
+- [云函数连接Redis数据库示例](https://ext.dcloud.net.cn/plugin?id=1846)
 
 ## 获取数据库的引用
 
@@ -234,18 +237,36 @@ exports.main = async (event, context) => {
 
 方法1： collection.add(data)
 
-示例：
+参数说明
 
 | 参数 | 类型   | 必填 | 说明                                     |
 | ---- | ------ | ---- | ---------------------------------------- |
 | data | object &#124; array | 是   | {_id: '10001', 'name': 'Ben'} _id 非必填|
+
+响应参数
+
+单条插入时
+
+
+| 参数| 类型	|  说明																			|
+| ----| ------|  ----------------------------------------	|
+|id		| String|插入记录的id																|
+
+批量插入时
+
+| 参数		| 类型	|  说明																			|
+| ----		| ------|  ----------------------------------------	|
+| inserted| Number| 插入成功条数															|
+|ids			| Array	|批量插入所有记录的id												|
+
+示例：
 
 ```js
 // 单条插入数据
 let res = await collection.add({
   name: 'Ben'
 })
-// 批量插入数据，腾讯云暂不支持
+// 批量插入数据
 let res = await collection.add([{
   name: 'Alex'
 },{
@@ -253,11 +274,7 @@ let res = await collection.add([{
 },{
   name: 'John'
 }])
-// res.inserted // 插入成功条数
-// res.result // 阿里云特有，批量插入返回的所有记录 id
 ```
-
-<!-- // res.failIndexes // 腾讯云特有，插入失败的记录的下标 -->
 
 **Tips**
 
@@ -345,8 +362,6 @@ let res = await db.collection('goods').where({
 
 | 字段      | 类型    | 必填 | 说明                     |
 | --------- | ------- | ---- | ------------------------ |
-| code      | string  | 否   | 状态码，操作成功则不返回 |
-| message   | string  | 否   | 错误描述                 |
 | total     | Integer | 否   | 计数结果                 |
 | requestId | string  | 否   | 请求序列号，用于错误排查 |
 

@@ -52,13 +52,13 @@ change 事件返回 detail 中包含一个 source 字段，表示导致变更的
 - 同时监听 change transition，开始滑动时触发transition, 放开手后，在ios平台触发顺序为 transition... change，Android/微信小程序/支付宝为 transition... change transition...
  
 #### swiper-item
-仅可放置在 ``<swiper>`` 组件中，宽高自动设置为100%。
+仅可放置在 ``<swiper>`` 组件中，宽高自动设置为100%。注意：宽高100%是相对于其父组件，不是相对于子组件，不能被子组件自动撑开。
 
 |属性名|类型|默认值|说明|
 |:-|:-|:-|:-|:-|
 |item-id|String||该 swiper-item 的标识符|
 
-**示例** [查看演示](https://uniapp.dcloud.io/h5/pages/component/swiper/swiper)
+**示例** [查看演示](https://hellouniapp.dcloud.net.cn/pages/component/swiper/swiper)
 ```html
 <template>
 	<view>

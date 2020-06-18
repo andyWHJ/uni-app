@@ -141,6 +141,35 @@ splash（启动封面）是App必然存在的、不可取消的。
 |speech|Object|语音识别配置，支持讯飞语音、百度语音，[详见](http://ask.dcloud.net.cn/article/35059)，在uni-app中只用 [plus.speech](http://www.html5plus.org/doc/zh_cn/speech.html) 进行调用。|
 |maps|Object|原生地图配置，目前仅支持 [高德地图](http://lbs.amap.com/)，申请方式可参考：[地图插件配置](http://ask.dcloud.net.cn/article/29)。|
 
+#### optimization@app-vue-optimization
+
+小程序的分包，除了联网分段下载外，还可以减轻启动时加载的js数量，可以提升启动速度。
+
+从uni-app 2.7.12+ 开始，App-vue平台也兼容了小程序的分包配置，但默认并不开启。
+
+在manifest配置以下节点，可以在App端启动分包。
+
+|属性|类型|说明|
+|:-|:-|:-|
+|subPackages|Boolean|是否开启分包优化|
+
+```
+"app-plus": {
+  "optimization": {
+    "subPackages": true
+  }
+}
+```
+
+在manifest中启动分包后，需要在pages.json中配置具体的分包规则，与小程序的配置相同，详见：[https://uniapp.dcloud.io/collocation/pages?id=subpackages](https://uniapp.dcloud.io/collocation/pages?id=subpackages)
+
+也就是一旦在pages.json里配置分包，小程序一定生效，而app是否生效，取决于manifest里是否开启。
+
+注意: 
+* App开启分包后，每个分包单独编译成一个js文件(都包含在app内，不会联网下载)，当App首页是vue时，可减小启动加载文件大小，提升启动速度。
+* 首页是nvue时，分包不会提升启动速度，nvue本身启动速度就快于vue，也快于开启分包后的首页为vue的应用。如果追求极致启动速度，还是应该使用nvue做首页并在manifest开启fast模式。
+* App页面较少时，分包对启动速度的优化不明显。
+
 
 #### nvue@nvue
 `nvue` 页面布局初始设置
@@ -467,25 +496,30 @@ mp-qq只支持自定义组件模式，不存在usingComponents配置
 
 以上面的分包为例，放在每个分包root对应目录下的静态文件会被打包到此分包内。
 
-### 快应用-华为@quickapp-webview
+### 快应用@quickapp-webview
 
 |属性							 |类型			|说明|
 |:-								 |:-			|:-|
-|icon							 |String	|应用图标 华为推荐 192x192|
+|icon							 |String	|应用图标，华为推荐 192x192|
 |package					 |String	|应用包名|
-|minPlatformVersion|Number	|最小平台运行支持(华为最低 1070)|
+|minPlatformVersion|Number	|最小平台运行支持(华为最低 1070，vivo 1063)|
 |versionName			 |String	|版本名称|
 |versionCode			 |Number	|版本号|
 
 
 **manifest.json配置**
 ```
-"quickapp-webview": {
+"quickapp-webview": {// 快应用通用配置
   "icon": "/static/logo.png",
   "package": "com.example.demo",
-  "minPlatformVersion": 1070,
   "versionName": "1.0.0",
   "versionCode": 100
+},
+"quickapp-webview-union": {// 快应用联盟，目前仅支持 vivo、oppo
+  "minPlatformVersion": 1063 //最小平台支持
+},
+"quickapp-webview-huawei": {// 快应用华为
+  "minPlatformVersion": 1070 //最小平台支持
 }
 ```
 
@@ -505,6 +539,9 @@ mp-qq只支持自定义组件模式，不存在usingComponents配置
 	// app-plus 节点是 App 特有配置，推荐在 HBuilderX 的 manifest.json 可视化界面操作完成配置。
 	"app-plus": {
 		// HBuilderX->manifest.json->模块权限配置
+    "optimization": {
+      "subPackages": true // HBuilderX 2.7.12+ 支持
+    },
 		"modules": {
 			"Contacts": {},
 			"Fingerprint": {},

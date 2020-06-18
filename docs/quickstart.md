@@ -84,13 +84,19 @@ uni-app自带的模板有 Hello uni-app ，是官方的组件和API示例。还�
       <img src="https://img-cdn-qiniu.dcloud.net.cn/uniapp/doc/uni-app-debug-mp-360.png"/>
     </div>
 
-8. 在华为开发者工具里运行：进入hello-uniapp项目，点击工具栏的运行 -> 运行到小程序模拟器 -> 华为开发者工具，即可在华为开发者工具里面体验uni-app。
+8. 在快应用联盟工具里运行：进入hello-uniapp项目，点击工具栏的运行 -> 运行到小程序模拟器 -> 快应用联盟工具，即可在快应用联盟工具里面体验uni-app。
+    <br/>
+    <div align=center>
+      <img src="https://img-cdn-qiniu.dcloud.net.cn/uniapp/doc/uni-app-run-debug-quickapp-webview.png"/>
+    </div>
+
+9. 在华为开发者工具里运行：进入hello-uniapp项目，点击工具栏的运行 -> 运行到小程序模拟器 -> 华为开发者工具，即可在华为开发者工具里面体验uni-app。
     <br/>
     <div align=center>
       <img src="https://img-cdn-qiniu.dcloud.net.cn/uniapp/doc/uni-app-run-debug-quickapp-webview-huawei.png"/>
     </div>
 
-9. 在QQ小程序开发工具里运行：内容同上，不再重复。
+10. 在QQ小程序开发工具里运行：内容同上，不再重复。
 
 **Tips**
 
@@ -132,7 +138,7 @@ HBuilderX 还提供了快捷运行菜单，可以按数字快速选择要运行�
 
 #### 发布为H5
 
-1. 在 ``manifest.json`` 的可视化界面，进行如下配置（发行在网站根目录可不配置应用基本路径），此时发行网站路径是 www.xxx.com/h5，如：[https://uniapp.dcloud.io/h5](https://uniapp.dcloud.io/h5)。
+1. 在 ``manifest.json`` 的可视化界面，进行如下配置（发行在网站根目录可不配置应用基本路径），此时发行网站路径是 www.xxx.com/h5，如：[https://hellouniapp.dcloud.net.cn](https://hellouniapp.dcloud.net.cn)。
 <div align=center>
 	<img src="https://img-cdn-qiniu.dcloud.net.cn/uniapp/doc/build-h5-1.png" style="max-width:600px;height:auto;"/>
 </div>
@@ -192,6 +198,15 @@ HBuilderX 还提供了快捷运行菜单，可以按数字快速选择要运行�
 
 **注意**
 - 目前仅windows平台支持
+
+
+**发布为快应用联盟：**
+1. 入驻快应用联盟，参考：[快应用联盟教程](https://www.quickapp.cn/)。
+2. 在HBuilderX中顶部菜单依次点击 "发行" => "快应用联盟"，即可在 ``/unpackage/dist/build/quickapp-webview`` 生成快应用联盟项目代码。
+<div align=center>
+  <img src="https://img-cdn-qiniu.dcloud.net.cn/uniapp/doc/uni-app-run-release-quickapp-webview.png"/>
+</div>
+3. 在快应用联盟工具中，导入生成的快应用联盟项目，测试项目代码运行正常后，点击”构建“打包正式版，在[快应用联盟后台](https://www.quickapp.cn/)上传
 
 
 **发布为华为快应用：**
@@ -265,7 +280,9 @@ npm run build:%PLATFORM%
 |mp-toutiao|字节跳动小程序|
 |mp-qq|qq 小程序|
 |mp-360|360 小程序|
-|quickapp-webview|快应用|
+|quickapp-webview|快应用通用|
+|quickapp-webview-union|快应用联盟|
+|quickapp-webview-huawei|快应用华为|
 
 可以自定义更多条件编译平台，比如钉钉小程序，参考[package.json文档](https://uniapp.dcloud.io/collocation/package)。
 
@@ -274,13 +291,22 @@ npm run build:%PLATFORM%
 - 类小程序webview渲染方式：[https://ask.dcloud.net.cn/article/37182](https://ask.dcloud.net.cn/article/37182)
 - 原生渲染方式：[https://ask.dcloud.net.cn/article/37145](https://ask.dcloud.net.cn/article/37145)
 
+### 运行并发布快应用联盟@quickapp-webview
+HBuilderX 2.7.12+ alpha 版支持
+
+**注意**
+- 目前仅vivo oppo支持
+- 暂不支持 canvas 组件
+
 ### 运行并发布快应用-华为@quickapp-webview-huawei
 HBuilderX 2.7.10+ alpha 版支持
 
 注意事项
 - Huawei QuickApp IDE 最低版本 2.5.2
 - 最小平台版本支持需要 1070
-
+- 暂不支持 `uni.login(OBJECT)`
+- 页面有滚动条时 canvas 组件不会跟随页面滚动
+- rich-text 组件某些情况下显示异常
 
 **其他：**
 

@@ -14,6 +14,10 @@ const uniAccount = require('uni-account')
 const uniAccount = require('@dcloudio/uni-account')
 ```
 
+**注意**
+
+- 插件市场导入的用法请参考[云函数公用模块](https://uniapp.dcloud.net.cn/uniCloud/cf-common)
+
 ## 初始化
 
 进行初始化操作返回 uni-account 实例
@@ -56,7 +60,8 @@ const uniAccountIns = uniAccount.initAlipay({
 
 ### 获取 openid
 
-`uniAccountIns.code2Session`。传入`uni.login`返回的`code`来获取用户 openid 等信息
+`uniAccountIns.code2Session`。传入客户端上调用[uni.login](https://uniapp.dcloud.net.cn/api/plugins/login?id=login)返回的`code`来获取用户`openid`等信息
+
 
 **入参说明**
 

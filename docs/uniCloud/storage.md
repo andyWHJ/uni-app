@@ -35,7 +35,7 @@
 |参数名						|类型			|必填	|默认值	|说明																														|平台差异说明							|
 |:-:							|:-:			|:-:	|:-:		|:-:																														|:-:											|
 |filePath					|String		|是		|-			|要上传的文件对象																								|-												|
-|cloudPath				|String		|-		|-			|文件的绝对路径，包含文件名																			|阿里云非必填，腾讯云必填	|
+|cloudPath				|String		|是		|-			|文件的绝对路径，包含文件名																			|-	|
 |fileType					|String		|-		|-			|文件类型，支付宝小程序、钉钉小程序必填，可选image、video、audio|-												|
 |onUploadProgress	|Function	|否		|-			|上传进度回调																										|-												|
 
@@ -49,8 +49,6 @@
 
 |字段		|类型	|说明														|
 |:-:		|:-:	|:-:														|
-|code		|String	|状态码，操作成功则不返回									|
-|message	|String	|错误描述													|
 |fileID		|String	|文件唯一 ID，用来访问文件，建议存储起来	|
 |requestId	|String	|请求序列号，用于错误排查									|
 
@@ -78,7 +76,8 @@ uni.chooseImage({
 
 			// promise
 			const result = await uniCloud.uploadFile({
-				filePath: filePath
+				filePath: filePath,
+        cloudPath: 'a.jpg',
 				onUploadProgress: function(progressEvent) {
 			          console.log(progressEvent);
 			          var percentCompleted = Math.round(
@@ -89,13 +88,13 @@ uni.chooseImage({
 
 			// callback
 			uniCloud.uploadFile({
-				filePath: filePath
-				},
-			        onUploadProgress: function(progressEvent) {
-			          console.log(progressEvent);
-			          var percentCompleted = Math.round(
-			            (progressEvent.loaded * 100) / progressEvent.total
-			          );
+				filePath: filePath,
+        cloudPath: 'a.jpg',
+        onUploadProgress: function(progressEvent) {
+          console.log(progressEvent);
+          var percentCompleted = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          );
 				},
 				success() {},
 				fail() {},
@@ -110,7 +109,7 @@ uni.chooseImage({
 
 **Tips**
 
-- 阿里云返回的fileID为链接形式
+- 阿里云返回的fileID为链接形式可以直接使用，腾讯云返回的为cloud://形式，如需展示需要调用getTempFileURL获取链接
 
 ## getTempFileURL(Object object)
 
@@ -133,18 +132,16 @@ uni.chooseImage({
 |字段	|类型	|必填	|说明					|
 |:-:	|:-:	|:-:	|:-:					|
 |fileID	|String	|是		|文件 ID				|
-|maxAge	|Number	|是		|文件链接有效期，单位：秒	|
+<!-- |maxAge	|Number	|是		|文件链接有效期，单位：秒	| -->
 
-**注意**
+<!-- **注意**
 
-- `maxAge`在配置所有人可读权限时不生效
+- `maxAge`在配置所有人可读权限时不生效 -->
 
 #### 响应参数
 
 |字段		|类型					|说明							|
 |:-:		|:-:					|:-:							|
-|code		|String					|状态码，操作成功则为 SUCCESS	|
-|message	|String					|错误描述						|
 |fileList	|&lt;Array&gt;.Object	|存储下载链接的数组				|
 |requestId	|String					|请求序列号，用于错误排查		|
 
@@ -175,7 +172,7 @@ uniCloud.getTempFileURL({
 
 ## deleteFile(Object object)
 
-删除云端文件
+删除云端文件，**使用阿里云作为服务商时，最好不要使用客户端删除云端文件**
 
 #### 请求参数
 
@@ -189,8 +186,6 @@ uniCloud.getTempFileURL({
 
 |字段		|类型					|必填	|说明						|
 |:-:		|:-:					|:-:	|:-:						|
-|code		|String					|否		|状态码，操作成功则不返回	|
-|message	|String					|否		|错误描述					|
 |fileList	|&lt;Array&gt;.Object	|否		|删除结果组成的数组			|
 |requestId	|String					|否		|请求序列号，用于错误排查	|
 
@@ -198,7 +193,6 @@ uniCloud.getTempFileURL({
 
 |字段	|类型	|必填	|说明						|
 |:-:	|:-:	|:-:	|:-:						|
-|code	|String	|否		|删除结果，成功为 SUCCESS	|
 |fileID	|String	|是		|文件 ID					|
 
 #### 示例代码
@@ -222,37 +216,6 @@ uniCloud.deleteFile(
 );
 ```
 
-<!-- ### 下载文件
-
-downloadFile(Object)
-
-请求参数
-
-| 字段 | 类型 | 必填 | 说明
-| :-: | :-: | :-: | :-: |
-| fileID | String | 是 | 要下载的文件的id
-| tempFilePath | String | 否 | 下载的文件要存储的位置
-
-响应参数
-
-| 字段 | 类型 | 必填 | 说明
-| :-: | :-: | :-: | :-: |
-| code | String | 否 | 状态码，操作成功则不返回
-| message | String | 否 | 错误描述
-| fileContent | Buffer | 否 | 下载的文件的内容。如果传入tempFilePath则不返回该字段
-| requestId | String | 否 | 请求序列号，用于错误排查
-
-示例代码
-
-```javascript
-let result = await tcb.downloadFile({
-    fileID: "cloud://aa-99j9f/my-photo.png",
-    // tempFilePath: '/tmp/test/storage/my-photo.png',
-	success(){},
-	fail(){},
-	complete(){}
-});
-``` -->
 # 云函数API
 
 ## uniCloud.uploadFile(Object uploadFileOptions)
@@ -260,8 +223,6 @@ let result = await tcb.downloadFile({
 **云函数**内上传文件至云开发存储服务。
 
 **平台兼容性**
-
-客户端上传文件没有此兼容性差异
 
 |阿里云	|腾讯云	|
 |----		|----		|
@@ -279,8 +240,6 @@ let result = await tcb.downloadFile({
 
 | 字段			| 类型	| 必填| 说明																			|
 | ---				| ---		| ---	| ---																				|
-| code			| string| 否	| 状态码，操作成功则不返回。								|
-| message		| string| 否	| 错误描述。																|
 | fileID		| fileID| 是	| 文件唯一 ID，用来访问文件，建议存储起来。	|
 | requestId	| string| 否	| 请求序列号，用于错误排查。								|
 
@@ -318,14 +277,12 @@ let result = await uniCloud.uploadFile({
 | 字段	| 类型		| 必填| 说明						|
 | ---		| ---			| ---	| ---							|
 | fileID| string	| 是	| 文件 ID。				|
-| maxAge| Integer	| 是	| 文件链接有效期。|
+<!-- | maxAge| Integer	| 是	| 文件链接有效期。| -->
 
 #### 响应参数
 
 | 字段			| 类型								| 必填| 说明													|
 | ---				| ---									| ---	| ---														|
-| code			| string							| 否	| 状态码，操作成功则为 SUCCESS。|
-| message		| string							| 否	| 错误描述。										|
 | fileList	| &lt;Array&gt;.object| 否	| 存储下载链接的数组。					|
 | requestId	| string							| 否	| 请求序列号，用于错误排查。		|
 
@@ -333,7 +290,6 @@ let result = await uniCloud.uploadFile({
 
 | 字段				| 类型	| 必填| 说明											|
 | ---					| ---		| ---	| ---												|
-| code				| string| 否	| 删除结果，成功为 SUCCESS。|
 | fileID			| string| 是	| 文件 ID。									|
 | tempFileURL	| string| 是	| 文件访问链接。						|
 
@@ -361,8 +317,6 @@ let result = await uniCloud.getTempFileURL({
 
 | 字段			| 类型								| 必填| 说明											|
 | ---				| ---									| ---	| ---												|
-| code			| string							| 否	| 状态码，操作成功则不返回。|
-| message		| string							| 否	| 错误描述									|
 | fileList	| &lt;Array&gt;.object| 否	| 删除结果组成的数组。			|
 | requestId	| string							| 否	| 请求序列号，用于错误排查。|
 
@@ -370,7 +324,6 @@ let result = await uniCloud.getTempFileURL({
 
 | 字段 | 类型 | 必填 | 说明 |
 | --- | --- | --- | --- |
-| code | string | 否 | 删除结果，成功为SUCCESS。 |
 | fileID | string | 是 | 文件 ID。 |
 
 #### 示例代码
@@ -406,8 +359,6 @@ let result = await uniCloud.deleteFile({
 
 | 字段				| 类型	| 必填| 说明																										|
 | ---					| ---		| ---	| ---																											|
-| code				| string| 否	| 状态码，操作成功则不返回。															|
-| message			| string| 否	| 错误描述。																							|
 | fileContent	| Buffer| 否	| 下载的文件的内容。如果传入 tempFilePath 则不返回该字段。|
 | requestId		| string| 否	| 请求序列号，用于错误排查。															|
 

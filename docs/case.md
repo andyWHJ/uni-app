@@ -1,4 +1,4 @@
-DCloud有**500万**开发者，[uni统计](https://tongji.dcloud.net.cn/)手机端月活**9.6亿**。是开发者数量和案例最丰富的多端开发框架。
+DCloud有**500万**开发者，[uni统计](https://tongji.dcloud.net.cn/)手机端月活**10亿**。是开发者数量和案例最丰富的多端开发框架。
 
 欢迎知名开发商[提交案例](https://github.com/dcloudio/uni-app/issues/6)或接入[uni统计](https://tongji.dcloud.net.cn/)。
 
@@ -163,6 +163,8 @@ uni-app助力数百家单位快速上线**抗疫系统**，开源众多项目，
 
 **极志愿：**专业高考志愿填报。**<span style="color:#42b983">多端获客典型案例，1个月获得400万用户</span>**，[详见报道](https://mp.weixin.qq.com/s?__biz=MzU3NTU5NDc0NA==&mid=2247491214&idx=1&sn=7e334d079146d9e31cea407f45bd8624)。体验方式：[App、微信小程序、百度小程序、H5 官网地址](https://www.jizhy.com/home/)
 
+**Crimaster犯罪大师：**火爆的全球推理侦探专属社区。[Android](https://android.myapp.com/myapp/detail.htm?apkName=com.ultron.crimaster)、[iOS](https://apps.apple.com/cn/app/crimaster%E7%8A%AF%E7%BD%AA%E5%A4%A7%E5%B8%88/id1501701702)
+
 #### 互联网公司
 
 **腾讯：** 微信小程序搜索“腾讯全民模拟炒股大赛”
@@ -174,13 +176,15 @@ uni-app助力数百家单位快速上线**抗疫系统**，开源众多项目，
 **vivo官方商城：**微信小程序搜索"vivo"，支付宝搜索 "vivo"
 
 <div class="scan-code">
- <strong>vivo会员官方小程序：</strong> 微信小程序搜索 "vivo会员"，或鼠标移此查看[微信小程序码]
+ <strong>vivo会员官方小程序：</strong> 微信小程序搜索 "vivo会员"，<scan-code-text class="scan-code-text">或鼠标移此查看[微信小程序码]</scan-code-text>
  <div class="scan-code-hover">
     <div class="scan-code-hover-box">
       <img src="https://img.cdn.aliyun.dcloud.net.cn/uni-app/vivovip.jpg" alt="二维码获取失败" />
     </div>
  </div>
 </div>
+
+**搜狐狐友圈：**微信、支付宝、百度、头条小程序均支持。
 
 **联想集团官方小程序：** 微信小程序搜索 “联想集团”
 
@@ -420,6 +424,10 @@ uni-app助力数百家单位快速上线**抗疫系统**，开源众多项目，
 **出发吧！冒险家：** 曾Taptap首页推荐的冒险游戏。[Android](https://www.seagame.com/mxj/android1.apk)、[iOS](https://apps.apple.com/cn/app/id1367825240)
 
 #### 创业公司
+
+**Crimaster犯罪大师：**火爆的全球推理侦探专属社区。[Android](https://android.myapp.com/myapp/detail.htm?apkName=com.ultron.crimaster)、[iOS](https://apps.apple.com/cn/app/crimaster%E7%8A%AF%E7%BD%AA%E5%A4%A7%E5%B8%88/id1501701702)
+
+**仓鼠团：** 囤好货到仓鼠,仓鼠团您身边的购物助手。[App通用链接](http://m3w.cn/cst)
 
 **波比英语课堂：**幼儿英语启蒙，培养国际宝宝。[App、小程序通用链接](http://m3w.cn/bbyykt)
 
